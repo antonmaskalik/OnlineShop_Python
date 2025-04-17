@@ -1,0 +1,9 @@
+{
+     "browser": "chromium",
+     "headless": false,
+     "base_url": "https://www.saucedemo.com/",
+     "window_size": {
+          "width": 1920,
+          "height": 1080
+     }
+}
