@@ -11,12 +11,12 @@ class CartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        self._cart_item_locator = "div.cart_item"
-        self._continue_shopping_button_locator = "button#continue-shopping"
-        self._checkout_button_locator = "button#checkout"
+        self._cart_item = page.locator("div.cart_item")
+        self._continue_shopping_button = page.locator("button#continue-shopping")
+        self._checkout_button = page.locator("button#checkout")
 
     def get_cart_items(self) -> list[ProductCardComponent]:
-        product_cards = self.page.locator(self._cart_item_locator)
+        product_cards = self._cart_item
         return [
             ProductCardComponent(product_cards.nth(i))
             for i in range(product_cards.count())

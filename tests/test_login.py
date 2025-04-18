@@ -38,7 +38,4 @@ class TestLogin:
         login_page.enter_username(user.username)
         login_page.enter_password(password=user.password)
         login_page.click_login()
-        error_message = login_page.get_error_message()
-
-        expect(error_message).to_be_visible()
-        expect(error_message).to_have_text(expected_error)
+        login_page.chck_error_message(expected_error)

@@ -11,10 +11,10 @@ class ProductsPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        self._product_card_locator = ".inventory_item"
+        self._product_card = page.locator(".inventory_item")
 
     def get_all_product_cards(self) -> list[ProductCardComponent]:
-        product_cards = self.page.locator(self._product_card_locator)
+        product_cards = self._product_card
         return [
             ProductCardComponent(product_cards.nth(i))
             for i in range(product_cards.count())
@@ -22,5 +22,5 @@ class ProductsPage(BasePage):
 
     def expect_all_cards_valid(self) -> None:
         for card in self.get_all_product_cards():
-            card.expect_card_valid()
-            expect(card.image()).to_be_visible()
+            card.check_valid_card()
+            card.check_image_visible()
