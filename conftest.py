@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 
 from units.config import Config
 
@@ -7,24 +7,24 @@ CONFIG = Config()
 
 
 @pytest.fixture(scope="function")
-def browser():
-    with sync_playwright() as p:
+async def browser():
+    async with async_playwright() as p:
         if CONFIG.BROWSER == "chromium":
-            browser = p.chromium.launch(headless=CONFIG.HEADLESS)
+            browser = await p.chromium.launch(headless=CONFIG.HEADLESS)
         elif CONFIG.BROWSER == "firefox":
-            browser = p.firefox.launch(headless=CONFIG.HEADLESS)
+            browser = await p.firefox.launch(headless=CONFIG.HEADLESS)
         elif CONFIG.BROWSER == "webkit":
-            browser = p.webkit.launch(headless=CONFIG.HEADLESS)
+            browser = await p.webkit.launch(headless=CONFIG.HEADLESS)
         else:
             raise ValueError(f"Unsupported browser: {CONFIG.BROWSER}")
 
         yield browser
-        browser.close()
+        await browser.close()
 
 
 @pytest.fixture(scope="function")
-def page(browser):
-    context = browser.new_context(viewport=CONFIG.WINDOW_SIZE)
-    page = context.new_page()
+async def page(browser):
+    context = await browser.new_context(viewport=CONFIG.WINDOW_SIZE)
+    page = await context.new_page()
     yield page
-    context.close()
+    await context.close()

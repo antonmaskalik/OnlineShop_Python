@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.async_api import Page, expect
 
 from configs.urls import Urls
 
@@ -9,8 +9,8 @@ class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
-    def open(self) -> None:
-        self.page.goto(self.PAGE_URL)
+    async def open(self) -> None:
+        await self.page.goto(self.PAGE_URL)
 
-    def expect_page_opened(self) -> None:
-        expect(self.page).to_have_url(self.PAGE_URL)
+    async def expect_page_opened(self) -> None:
+        await expect(self.page).to_have_url(self.PAGE_URL)

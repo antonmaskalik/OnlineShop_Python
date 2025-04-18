@@ -1,4 +1,4 @@
-from playwright.sync_api import Locator, expect
+from playwright.async_api import Locator, expect
 
 from enums.menu_item import MenuItem
 from pages.components.base_component import BaseComponen
@@ -13,15 +13,16 @@ class HeaderComponent(BaseComponen):
         self._menu_button = parent_element.locator("#react-burger-menu-btn")
         self._logo_locator = parent_element.locator("div.app_logo")
 
-    def open_cart(self) -> None:
-        self._cart_icon.click()
+    async def open_cart(self) -> None:
+        await self._cart_icon.click()
 
-    def click_menu_button(self) -> MenuContainerComponent:
-        self._menu_button.click()
+    async def click_menu_button(self) -> MenuContainerComponent:
+        await self._menu_button.click()
         return MenuContainerComponent(self.parent_element)
 
-    def select_menu_item(self, item_name: MenuItem) -> None:
-        self.click_menu_button().click_menu_item(item_name)
+    async def select_menu_item(self, item_name: MenuItem) -> None:
+        menu_container = await self.click_menu_button()
+        await menu_container.click_menu_item(item_name)
 
-    def check_logo_is_visible(self) -> None:
-        expect(self._logo_locator).to_be_visible()
+    async def check_logo_is_visible(self) -> None:
+        await expect(self._logo_locator).to_be_visible()

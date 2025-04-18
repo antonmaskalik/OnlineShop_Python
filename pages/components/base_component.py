@@ -1,4 +1,4 @@
-from playwright.sync_api import Locator
+from playwright.async_api import Locator
 
 
 class BaseComponen:

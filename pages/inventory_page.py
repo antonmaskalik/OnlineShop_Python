@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.async_api import Page, expect
 
 from configs.urls import Urls
 from pages.base_page import BasePage
@@ -13,14 +13,14 @@ class ProductsPage(BasePage):
 
         self._product_card = page.locator(".inventory_item")
 
-    def get_all_product_cards(self) -> list[ProductCardComponent]:
+    async def get_all_product_cards(self) -> list[ProductCardComponent]:
         product_cards = self._product_card
         return [
             ProductCardComponent(product_cards.nth(i))
-            for i in range(product_cards.count())
+            for i in range(await product_cards.count())
         ]
 
-    def expect_all_cards_valid(self) -> None:
-        for card in self.get_all_product_cards():
-            card.check_valid_card()
-            card.check_image_visible()
+    async def expect_all_cards_valid(self) -> None:
+        for card in await self.get_all_product_cards():
+            await card.check_valid_card()
+            await card.check_image_visible()
