@@ -24,7 +24,7 @@ class TestProductCards:
         all_products = await products_page.get_all_product_cards()
 
         assert len(all_products) >= 6, "Expected >= 6 product cards on the page."
-        await products_page.expect_all_cards_valid()
+        await products_page.check_all_cards_valid()
 
     async def test_open_product_card(self, test_setup: ProductsPage):
         products_page = test_setup

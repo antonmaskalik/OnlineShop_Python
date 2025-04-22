@@ -18,13 +18,13 @@ class TestLogin:
     async def test_login_successful(self, test_setup: tuple[LoginPage, ProductsPage]):
         login_page, products_page = test_setup
 
-        await login_page.expect_page_opened()
+        await login_page.check_page_opened()
 
         await login_page.enter_username(STANDARD_USER.username)
         await login_page.enter_password(STANDARD_USER.password)
         await login_page.click_login()
 
-        await products_page.expect_page_opened()
+        await products_page.check_page_opened()
 
     @pytest.mark.parametrize("user, expected_error", login_negative_cases)
     async def test_login_negative_cases(

@@ -1,6 +1,7 @@
 from playwright.async_api import Locator, expect
 
 from pages.components.base_component import BaseComponen
+from pages.models.product_card import ProductCardModel
 
 
 class ProductCardComponent(BaseComponen):
@@ -20,6 +21,22 @@ class ProductCardComponent(BaseComponen):
 
     async def click_action_button(self) -> None:
         await self._action_button.click()
+
+    async def get_title(self) -> str:
+        return await self._card_title.inner_text()
+
+    async def get_price(self) -> str:
+        return await self._card_price.inner_text()
+
+    async def get_description(self) -> str:
+        return await self._card_description.inner_text()
+
+    async def to_model(self) -> ProductCardModel:
+        return ProductCardModel(
+            title=await self.get_title(),
+            price=await self.get_price(),
+            description=await self.get_description(),
+        )
 
     async def check_image_visible(self) -> None:
         await expect(self._card_image).to_be_visible()
